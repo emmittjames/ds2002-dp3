@@ -56,5 +56,5 @@ while len(messages)<10 and blanks<50:
 sorted_messages = sorted(messages, key=lambda x: x["order"])
 
 for message in sorted_messages:
-    print(message["word"]
+    print(message["word"])
     delete_message(message["handle"])
