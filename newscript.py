@@ -50,7 +50,7 @@ while len(messages)<10 and blanks<50:
     if(message):
         messages.append(message)
     else:
-        time.sleep(1)
+        time.sleep(0.5)
         blanks+=1
 
 sorted_messages = sorted(messages, key=lambda x: x["order"])
