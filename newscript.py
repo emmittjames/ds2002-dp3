@@ -1,7 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
-import requests
-import json
+import requests, json, time
 
 url = "https://sqs.us-east-1.amazonaws.com/440848399208/gwu8ek"
 sqs = boto3.client('sqs')
@@ -38,18 +37,23 @@ def get_message():
             return {"order":order, "word":word, "handle":handle}
 
         else:
-            print("No messages in the queue")
-            return -1
-            
+            print("no messages in queue")
+            return None
+
     except ClientError as e:
         print(e.response['Error']['Message'])
 
 messages = []
-for i in range(9):
+blanks = 0
+while len(messages)<10 and blanks<50:
     message = get_message()
     if(message):
         messages.append(message)
     else:
-        break
+        time.sleep(1)
+        blanks+=1
 
-print(messages)
+sorted_messages = sorted(messages, key=lambda x: x["order"])
+
+for message in sorted_messages:
+    print(message["word"])
